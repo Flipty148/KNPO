@@ -1,4 +1,5 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    KNPO_Marenkov
+    KNPO_Marenkov \
+    Tests

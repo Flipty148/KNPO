@@ -102,7 +102,7 @@ QVector<int> choseTheLowestMissingVerts(const QVector<vert*> & allMissingVerts);
  *  \param[in] missingVerts - набор недостающих вершин
  *  \return - строка, содержащая ответ
 */
-QString formingAnswerString(bool resultSufficient, QVector<int> & missingVerts);
+QString formingAnswerString(bool resultSufficient, const QVector<int> & missingVerts);
 
 /*! \brief Считывает данные с указанного xml-файла
  *  \param[im] filename - имя файла источника
