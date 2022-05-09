@@ -6,7 +6,7 @@ bool isGivenSetVertsCoversOverlyingVert(const QVector<vert*> &allVerts, QVector<
 
 }
 
-QVector<vert*> findAllChildren(vert* & currentVert)
+void findAllChildren(vert** currentVert, QVector<vert*> & children)
 {
 
 }
