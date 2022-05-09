@@ -31,7 +31,7 @@ bool isVertContainsInVector(const vert* checkedVert, const QVector<vert*> & vert
 
 }
 
-QVector<int> choseTheLowestMissingVerts(const QVector<vert*> & allMissingVerts)
+void choseTheLowestMissingVerts(const QVector<vert*> & allMissingVerts, QVector<int> &numbersVerts)
 {
 
 }

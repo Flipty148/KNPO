@@ -93,9 +93,9 @@ bool isVertContainsInVector(const vert* checkedVert, const QVector<vert*> & vert
 
 /*! \brief Выбирает из полного набора недастающих вершины, самые нижние
  *  \param[in] allMissingVerts - избыточный набор недостающих вершин
- *  \return - набор номеров недостающих вершин
+ *  \param[out] numbersVerts - набор номеров недостающих вершин
 */
-QVector<int> choseTheLowestMissingVerts(const QVector<vert*> & allMissingVerts);
+void choseTheLowestMissingVerts(const QVector<vert*> & allMissingVerts, QVector<int> &numbersVerts);
 
 /*! \brief Формирует выходную строку ответа
  *  \param[in] resultSufficient - результат того, являеся ли заданный набор достаточным
