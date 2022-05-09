@@ -68,7 +68,7 @@ void Test_detectAllSelectedVerts::severalUnderlyingVerts()
     int countUnderlyingVerts = 3;
     for (int i=0; i<countUnderlyingVerts; i++)
     {
-        QCOMPARE(actualUnderlyingVerts[i], expUnderlyingVerts[i]);
+        QCOMPARE(expUnderlyingVerts.contains(actualUnderlyingVerts[i]), true);
         QCOMPARE(actualUnderlyingVerts.count(actualUnderlyingVerts[i]), 1);
     }
 
@@ -132,8 +132,7 @@ void Test_detectAllSelectedVerts::oneUnderlyingVerts()
     QCOMPARE(actualOverlyingVert, expOverlyingVert);
     QCOMPARE(actualUnderlyingVerts.length(), expUnderlyingVerts.length());
 
-    int countUnderlyingVerts = 1;
-    QCOMPARE(actualUnderlyingVerts[0], expUnderlyingVerts[0]);
+    QCOMPARE(expUnderlyingVerts.contains(actualUnderlyingVerts[0]), true);
     QCOMPARE(actualUnderlyingVerts.count(actualUnderlyingVerts[0]), 1);
 
     //---- Очистка памяти ----
@@ -174,7 +173,7 @@ void Test_detectAllSelectedVerts::relationshipBetweenUnderlyingVerts()
     int countUnderlyingVerts = 3;
     for (int i=0; i<countUnderlyingVerts; i++)
     {
-        QCOMPARE(actualUnderlyingVerts[i], expUnderlyingVerts[i]);
+        QCOMPARE(expUnderlyingVerts.contains(actualUnderlyingVerts[i]), true);
         QCOMPARE(actualUnderlyingVerts.count(actualUnderlyingVerts[i]), 1);
     }
 
@@ -216,7 +215,7 @@ void Test_detectAllSelectedVerts::underlyingVertsOverOverlying()
     int countUnderlyingVerts = 3;
     for (int i=0; i<countUnderlyingVerts; i++)
     {
-        QCOMPARE(actualUnderlyingVerts[i], expUnderlyingVerts[i]);
+        QCOMPARE(expUnderlyingVerts.contains(actualUnderlyingVerts[i]), true);
         QCOMPARE(actualUnderlyingVerts.count(actualUnderlyingVerts[i]), 1);
     }
 
