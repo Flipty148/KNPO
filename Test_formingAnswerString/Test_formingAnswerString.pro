@@ -6,8 +6,9 @@ CONFIG -= app_bundle
 
 TEMPLATE = app
 
-SOURCES +=  tst_test_forminganswerstring.cpp \
-    ../KNPO_Marenkov/coverVert.cpp
+SOURCES +=  \
+    ../KNPO_Marenkov/coverVert.cpp \
+    test_forminganswerstring.cpp
 
 
 HEADERS += \

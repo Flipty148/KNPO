@@ -2,4 +2,4 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     KNPO_Marenkov \
-    Tests
+    Test_formingAnswerString

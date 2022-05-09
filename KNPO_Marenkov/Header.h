@@ -76,7 +76,7 @@ bool isGivenSetOfUnderlyingVertsSufficient(const QVector<vert*> & findingChildre
  *  \param[out] underlyingVerts - группа вершин, считающихся нижележащими
  *  \param[out] overlyingVert - вершина, считающаяся вышележащей
 */
-void detectAllSelectedVerts(const QVector<vert*> &verts, QVector<vert*> &underlyingVerts, vert* &overlyingVert);
+void detectAllSelectedVerts(const QVector<vert*> &verts, QVector<vert*> &underlyingVerts, vert** overlyingVert);
 
 /*! \brief Удаляет из вектора вершину с указанным индексом и все связанные с ней дочерние вершины
  *  \param[in\out] verts - вектор вершин

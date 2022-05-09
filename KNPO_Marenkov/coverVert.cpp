@@ -16,7 +16,7 @@ bool isGivenSetOfUnderlyingVertsSufficient(const QVector<vert*> & findingChildre
 
 }
 
-void detectAllSelectedVerts(const QVector<vert*> &verts, QVector<vert*> &underlyingVerts, vert* &overlyingVert)
+void detectAllSelectedVerts(const QVector<vert*> &verts, QVector<vert*> &underlyingVerts, vert** overlyingVert)
 {
 
 }
