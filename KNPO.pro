@@ -7,4 +7,5 @@ SUBDIRS += \
     Test_detectAllSelectedVerts \
     Test_findAllChildren \
     Test_formingAnswerString \
+    Test_isGivenSetOfUnderlyingVertsSufficient \
     Test_isVertContainsInVector
