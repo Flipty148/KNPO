@@ -222,7 +222,7 @@ void Test_isGivenSetOfUnderlyingVertsSufficient::emptyUnderlyingVertsSet()
     int countMissing = 3;
     for (int i=0; i<countMissing; i++)
     {
-        QCOMPARE(actualMissingVerts.contains(expMissingVerts[i]), true);
+        QCOMPARE(expMissingVerts.contains(actualMissingVerts[i]), true);
         QCOMPARE(actualMissingVerts.count(actualMissingVerts[i]), 1);
     }
 
@@ -268,7 +268,7 @@ void Test_isGivenSetOfUnderlyingVertsSufficient::oneVertInUnderlyingSet()
     int countMissing = 2;
     for (int i=0; i<countMissing; i++)
     {
-        QCOMPARE(actualMissingVerts.contains(expMissingVerts[i]), true);
+        QCOMPARE(expMissingVerts.contains(actualMissingVerts[i]), true);
         QCOMPARE(actualMissingVerts.count(actualMissingVerts[i]), 1);
     }
 
