@@ -5,6 +5,7 @@ SUBDIRS += \
     Test_choseTheLowestMissingVerts \
     Test_deleteVertAndAllChildrenFromVector \
     Test_detectAllSelectedVerts \
+    Test_errorCheck \
     Test_findAllChildren \
     Test_formingAnswerString \
     Test_isGivenSetOfUnderlyingVertsSufficient \
