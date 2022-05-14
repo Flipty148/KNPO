@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<verts>
+    <vert number="абв">
+        <vert number="2" />
+        <vert number="3" select ="overlying" />
+    </vert>
+</verts>

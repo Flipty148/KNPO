@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<verts>
+    <vert number="1">
+        <vert number="2">
+            <vert number="4" />
+            <vert number="5" />
+            <vert number="6" />
+        </vert>
+        <vert number="3" select ="overlying">
+            <vert number="7">
+                <vert number="9"  select ="underlying" />
+                <vert number="10" select ="underlying" />
+            </vert>
+            <vert number="8" select ="underlying" />
+        </vert>
+    </vert>
+</verts>

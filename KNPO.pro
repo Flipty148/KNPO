@@ -10,4 +10,5 @@ SUBDIRS += \
     Test_formingAnswerString \
     Test_isGivenSetOfUnderlyingVertsSufficient \
     Test_isGivenSetVertsCoversOverlyingVert \
-    Test_isVertContainsInVector
+    Test_isVertContainsInVector \
+    Test_readXML
