@@ -9,6 +9,16 @@ bool isGivenSetVertsCoversOverlyingVert(const QVector<vert*> &allVerts, QVector<
 void findAllChildren(vert** currentVert, QVector<vert*> & children)
 {
 
+    if (!(*currentVert)->children.isEmpty())
+    {//Если у текущей вершины есть дети
+
+        int countChildrenCurrentVert = (*currentVert)->children.size(); // количество детей у текущей вершины
+        for (int i=0; i<countChildrenCurrentVert; i++)
+        {//Для всех детей текущей вершины
+            children.append((*currentVert)->children[i]); // добавить дочернюю вершину в список всех детей и их детей
+            findAllChildren(&(*currentVert)->children[i], children);// найти всех детей и их детей для дочерней вершины и добавить их
+        }
+    }
 }
 
 bool isGivenSetOfUnderlyingVertsSufficient(const QVector<vert*> & findingChildren, const QVector<vert*> & setUnderlyingVerts, QVector<vert*> &missingVerts)
