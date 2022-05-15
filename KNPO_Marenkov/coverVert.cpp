@@ -3,7 +3,27 @@
 
 bool isGivenSetVertsCoversOverlyingVert(const QVector<vert*> &allVerts, QVector<int> &numbersMissingVerts)
 {
+    //Выделить вершину, считающуюся вышележащей и группу нижележащих вершин
+    QVector<vert*> underlyingVerts;
+    vert* overlyingVert;
+    detectAllSelectedVerts(allVerts, underlyingVerts, &overlyingVert);
 
+    //Найти все дочерние и их дочерние вершины для вершины, считающейся вышележащей
+    QVector<vert*> allChildren;
+    findAllChildren(&overlyingVert, allChildren);
+
+    //Проверить является ли заданный набор вершин достаточным
+    QVector<vert*> allMissingVerts;
+    bool isSufficient = isGivenSetOfUnderlyingVertsSufficient(allChildren, underlyingVerts, allMissingVerts);
+
+    if (!isSufficient)
+    {//заданный набор не является достаточным...
+        QVector<int> numbersVerts;
+        choseTheLowestMissingVerts(allMissingVerts, numbersVerts); //Выбрать необходимые недостающие вершины
+        numbersMissingVerts.append(numbersVerts);
+    }
+
+    return isSufficient; //Вернуть факт того, достаточный ли заданный набор
 }
 
 void findAllChildren(vert** currentVert, QVector<vert*> & children)

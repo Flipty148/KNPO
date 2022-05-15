@@ -93,11 +93,7 @@ void Test_isGivenSetVertsCoversOverlyingVert::oneVert()
     QCOMPARE(actualNumbersMissingVerts.length(), expNumbersMissingVerts.length());
 
     //---- Очистка памяти ----
-    int countVerts =10;
-    for (int i=0; i<countVerts; i++)
-    {
-        delete verts[i];
-    }
+    delete verts[0];
 }
 
 
@@ -125,7 +121,7 @@ void Test_isGivenSetVertsCoversOverlyingVert::twoVerts()
     QCOMPARE(actualNumbersMissingVerts.length(), expNumbersMissingVerts.length());
 
     //---- Очистка памяти ----
-    int countVerts =10;
+    int countVerts =2;
     for (int i=0; i<countVerts; i++)
     {
         delete verts[i];
