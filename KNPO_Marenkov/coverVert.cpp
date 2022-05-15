@@ -33,7 +33,29 @@ void detectAllSelectedVerts(const QVector<vert*> &verts, QVector<vert*> &underly
 
 void deleteVertAndAllChildrenFromVector(QVector<vert*> &verts, int index)
 {
+    if (index>=0 && index<verts.size())
+    {// индекс содержится в векторе
+        QVector<vert*> allChildren;
+        findAllChildren(&verts[index], allChildren); // Найти всех детей и их детей удаляемой вершины
 
+        verts.remove(index);// Удалить вершину с указанным индексом
+
+        int i=0;
+        int countVerts = verts.size();
+        while (i < countVerts)
+        {// Пока не пройдены все вершины
+
+            if (isVertContainsInVector(verts[i], allChildren))
+            {// текущая дочерняя вершина содержится в списке вершин...
+                 verts.remove(i);// ...удалить вершину из общего списка вершин
+                 countVerts = verts.size();
+            }
+            else
+            {
+                i++; // перейти к следующей вершине
+            }
+        }
+    }
 }
 
 bool isVertContainsInVector(const vert* checkedVert, const QVector<vert*> & vertsVector)
