@@ -23,7 +23,70 @@ void findAllChildren(vert** currentVert, QVector<vert*> & children)
 
 bool isGivenSetOfUnderlyingVertsSufficient(const QVector<vert*> & findingChildren, const QVector<vert*> & setUnderlyingVerts, QVector<vert*> &missingVerts)
 {
+    //Скопировать список всех детей и их детей
+    QVector<vert*> copyFindingChildren;
+    copyFindingChildren.append(findingChildren);
 
+    //Удалить все выбранные вершины и их детей
+    int i=0;
+    int countVerts = copyFindingChildren.size();
+    while (i < countVerts)
+    {// Пока не пройдены все вершины
+        if (isVertContainsInVector(copyFindingChildren[i], setUnderlyingVerts))
+        {// текущая вершина выбрана...
+            deleteVertAndAllChildrenFromVector(copyFindingChildren, i); //... удалить вершуну и все её дочерние
+            countVerts = copyFindingChildren.size();
+            i = 0;
+        }
+        else
+        {
+            i++; // перейти к следующей вершине
+        }
+    }
+
+    //Считать вершину выбранной и удалить её из списка дочерних, если все её дети выбраны
+    QVector<vert*> pseudoSelected;
+    i = 0;
+    countVerts = copyFindingChildren.size();
+    while (i < countVerts)
+    { //Пока не пройдены все вершины
+        int countChildren = copyFindingChildren[i]->children.size(); // количество дочерних вершин
+        bool isChildrenSelected = true; //флаг, показывающий, что все дочерние вершины выбраны или псевдовыбраны
+        for (int j=0; j<countChildren && isChildrenSelected; j++)
+        {// Для каждой дочерней вершины
+            vert* currentChild = copyFindingChildren[i]->children[j]; // текущая дочерняя вершина
+
+            if (!isVertContainsInVector(currentChild, setUnderlyingVerts) && !isVertContainsInVector(currentChild, pseudoSelected))
+            { // текущая дочерняя вершина не выбрана и не псевдовыбрана...
+                isChildrenSelected = false; //... считать что не все дочерние вершины выбраны или псевдовыбраны
+            }
+        }
+
+        if (isChildrenSelected && countChildren !=0)
+        {// все дочерние вершины выбраны или псевдовыбраны
+            pseudoSelected.append(copyFindingChildren[i]); //добавить текущую вершину в набор псевдовыбранных
+            copyFindingChildren.remove(i); //удалить текущую вершину
+            countVerts = copyFindingChildren.size();
+            i=0;
+        }
+        else
+        {
+            i++; //Перейти к следующей вершине
+        }
+    }
+
+    bool isSetSuffisient;
+    if (copyFindingChildren.isEmpty())
+    {//Если список дочерних вершин пуст
+        isSetSuffisient = true; //Cчитать, что заданного набора достаточно
+    }
+    else
+    {//Иначе
+        missingVerts.append(copyFindingChildren); //Считать избыточным набором вершин все оставшиеся (не удалённые) вершины
+        isSetSuffisient = false; //Cчитать набор недостаточным
+    }
+
+    return isSetSuffisient;
 }
 
 void detectAllSelectedVerts(const QVector<vert*> &verts, QVector<vert*> &underlyingVerts, vert** overlyingVert)

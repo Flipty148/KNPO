@@ -203,10 +203,11 @@ void Test_isGivenSetOfUnderlyingVertsSufficient::emptyUnderlyingVertsSet()
     children[3] = verts[9];
 
     //---- Подготовка ожидаемых результатов ----
-    QVector<vert*> expMissingVerts(3);
-    expMissingVerts[0] = verts[7];
-    expMissingVerts[1] = verts[8];
-    expMissingVerts[2] = verts[9];
+    QVector<vert*> expMissingVerts(4);
+    expMissingVerts[0] = verts[6];
+    expMissingVerts[1] = verts[7];
+    expMissingVerts[2] = verts[8];
+    expMissingVerts[3] = verts[9];
 
     bool expSufficient = false;
 
@@ -219,7 +220,7 @@ void Test_isGivenSetOfUnderlyingVertsSufficient::emptyUnderlyingVertsSet()
     QCOMPARE(actualSufficient, expSufficient);
     QCOMPARE(actualMissingVerts.length(), expMissingVerts.length());
 
-    int countMissing = 3;
+    int countMissing = 4;
     for (int i=0; i<countMissing; i++)
     {
         QCOMPARE(expMissingVerts.contains(actualMissingVerts[i]), true);
@@ -250,9 +251,10 @@ void Test_isGivenSetOfUnderlyingVertsSufficient::oneVertInUnderlyingSet()
     children[3] = verts[9];
 
     //---- Подготовка ожидаемых результатов ----
-    QVector<vert*> expMissingVerts(2);
-    expMissingVerts[0] = verts[8];
-    expMissingVerts[1] = verts[9];
+    QVector<vert*> expMissingVerts(3);
+    expMissingVerts[0] = verts[6];
+    expMissingVerts[1] = verts[8];
+    expMissingVerts[2] = verts[9];
 
     bool expSufficient = false;
 
@@ -265,7 +267,7 @@ void Test_isGivenSetOfUnderlyingVertsSufficient::oneVertInUnderlyingSet()
     QCOMPARE(actualSufficient, expSufficient);
     QCOMPARE(actualMissingVerts.length(), expMissingVerts.length());
 
-    int countMissing = 2;
+    int countMissing = 3;
     for (int i=0; i<countMissing; i++)
     {
         QCOMPARE(expMissingVerts.contains(actualMissingVerts[i]), true);
@@ -298,8 +300,9 @@ void Test_isGivenSetOfUnderlyingVertsSufficient::twoVertsInUnderlyingSet()
     children[3] = verts[9];
 
     //---- Подготовка ожидаемых результатов ----
-    QVector<vert*> expMissingVerts(1);
-    expMissingVerts[0] = verts[8];
+    QVector<vert*> expMissingVerts(2);
+    expMissingVerts[0] = verts[6];
+    expMissingVerts[1] = verts[8];
 
     bool expSufficient = false;
 
