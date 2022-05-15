@@ -150,7 +150,14 @@ bool isVertContainsInVector(const vert* checkedVert, const QVector<vert*> & vert
 
 void choseTheLowestMissingVerts(const QVector<vert*> & allMissingVerts, QVector<int> &numbersVerts)
 {
-
+    int countAllMissingVerts = allMissingVerts.size();
+    for (int i=0; i < countAllMissingVerts; i++)
+    {//Для каждой вершины из избыточного набора недостающих вершин
+        if (allMissingVerts[i]->children.isEmpty())
+        {//текущая вершина не имеет дочерних вершин...
+           numbersVerts.append(allMissingVerts[i]->number); //...считать номер текущей вершины необходимым
+        }
+    }
 }
 
 QString formingAnswerString(bool resultSufficient, const QVector<int> & missingVerts)
