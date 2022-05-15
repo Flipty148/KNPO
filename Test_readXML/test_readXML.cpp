@@ -107,7 +107,8 @@ void Test_readXML::fileNotOpen()
     QString file = "./xml/fileNotOpen.xml";
 
     //---- Подготовка ожидаемого результата ----
-    errors expError = INPUT_FILE_NOT_OPEN;
+    error expError;
+    expError.type = INPUT_FILE_NOT_OPEN;
 
     //---- Выполнение ----
     try
@@ -115,10 +116,11 @@ void Test_readXML::fileNotOpen()
         vert* firstVert;
         readXML(file, &firstVert);
     }
-    catch (errors error)
+    catch (error err)
     {
-        QCOMPARE(error, expError);
+        QCOMPARE(err.type, expError.type);
     }
+    QVERIFY(false);
 }
 
 void Test_readXML::fileWithoutTree()
@@ -127,7 +129,8 @@ void Test_readXML::fileWithoutTree()
     QString file = "./xml/fileWithoutTree.xml";
 
     //---- Подготовка ожидаемого результата ----
-    errors expError = TREE_MISSING;
+    error expError;
+    expError.type = TREE_MISSING;
 
     //---- Выполнение ----
     try
@@ -135,10 +138,11 @@ void Test_readXML::fileWithoutTree()
         vert* firstVert;
         readXML(file, &firstVert);
     }
-    catch (errors error)
+    catch (error err)
     {
-        QCOMPARE(error, expError);
+        QCOMPARE(err.type, expError.type);
     }
+    QVERIFY(false);
 }
 
 void Test_readXML::oneVertInTree()
@@ -239,7 +243,9 @@ void Test_readXML::incorrectVertNumber()
     QString file = "./xml/incorrectVertNumber.xml";
 
     //---- Подготовка ожидаемого результата ----
-    errors expError = INCORRECT_NUMBER;
+    error expError;
+    expError.type = INCORRECT_NUMBER;
+    expError.incorrectAtr = "абв";
 
     //---- Выполнение ----
     try
@@ -247,10 +253,12 @@ void Test_readXML::incorrectVertNumber()
         vert* firstVert;
         readXML(file, &firstVert);
     }
-    catch (errors error)
+    catch (error err)
     {
-        QCOMPARE(error, expError);
+        QCOMPARE(err.type, expError.type);
+        QCOMPARE(err.incorrectAtr, expError.incorrectAtr);
     }
+    QVERIFY(false);
 }
 
 void Test_readXML::incorrectSelectType()
@@ -259,7 +267,10 @@ void Test_readXML::incorrectSelectType()
     QString file = "./xml/incorrectSelectType.xml";
 
     //---- Подготовка ожидаемого результата ----
-    errors expError = INCORRECT_SELECT_TYPE;
+    error expError;
+    expError.type = INCORRECT_SELECT_TYPE;
+    expError.incorrectAtr = "over";
+    expError.number = 3;
 
     //---- Выполнение ----
     try
@@ -267,10 +278,13 @@ void Test_readXML::incorrectSelectType()
         vert* firstVert;
         readXML(file, &firstVert);
     }
-    catch (errors error)
+    catch (error err)
     {
-        QCOMPARE(error, expError);
+        QCOMPARE(err.type, expError.type);
+        QCOMPARE(err.incorrectAtr, expError.incorrectAtr);
+        QCOMPARE(err.number, expError.number);
     }
+    QVERIFY(false);
 }
 
 QTEST_APPLESS_MAIN(Test_readXML);

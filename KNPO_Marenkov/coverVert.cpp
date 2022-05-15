@@ -56,12 +56,12 @@ bool writeTXT(const QString &filename, const QString & str)
 
 }
 
-errors errorCheck(const QVector<vert*> &verts)
+void errorCheck(const QVector<vert*> &verts, error & err)
 {
 
 }
 
-void errorHandler(errors errorCode, QString incorrectAtr, int number)
+void errorHandler(const error &err)
 {
 
 }

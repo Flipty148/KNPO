@@ -54,13 +54,15 @@ void Test_errorCheck::missingTree()
     verts[9]->typeOfSelection = UNDERLYING;
 
     //---- Подготовка ожидаемого результата ----
-    errors expErrorCode = TREE_MISSING;
+    error expError;
+    expError.type = TREE_MISSING;
 
     //---- Выполнение ----
-    errors actualErrorCode = errorCheck(verts);
+    error actualError;
+    errorCheck(verts, actualError);
 
     //---- Проверка ----
-    QCOMPARE(actualErrorCode, expErrorCode);
+    QCOMPARE(actualError.type, expError.type);
 
     //---- Очистка памяти ----
     int countVerts =13;
@@ -80,13 +82,15 @@ void Test_errorCheck::missingOverlyingVert()
     verts[9]->typeOfSelection = UNDERLYING;
 
     //---- Подготовка ожидаемого результата ----
-    errors expErrorCode = MISSING_OVERLYING_VERT;
+    error expError;
+    expError.type = MISSING_OVERLYING_VERT;
 
     //---- Выполнение ----
-    errors actualErrorCode = errorCheck(verts);
+    error actualError;
+    errorCheck(verts, actualError);
 
     //---- Проверка ----
-    QCOMPARE(actualErrorCode, expErrorCode);
+    QCOMPARE(actualError.type, expError.type);
 
     //---- Очистка памяти ----
     int countVerts =10;
@@ -108,13 +112,15 @@ void Test_errorCheck::severalOverlyingVert()
     verts[9]->typeOfSelection = UNDERLYING;
 
     //---- Подготовка ожидаемого результата ----
-    errors expErrorCode = SEVERAL_OVERLYING_VERTS;
+    error expError;
+    expError.type = SEVERAL_OVERLYING_VERTS;
 
     //---- Выполнение ----
-    errors actualErrorCode = errorCheck(verts);
+    error actualError;
+    errorCheck(verts, actualError);
 
     //---- Проверка ----
-    QCOMPARE(actualErrorCode, expErrorCode);
+    QCOMPARE(actualError.type, expError.type);
 
     //---- Очистка памяти ----
     int countVerts =10;
@@ -136,13 +142,15 @@ void Test_errorCheck::missingNumber()
     verts[1]->number = NULL;
 
     //---- Подготовка ожидаемого результата ----
-    errors expErrorCode = MISSING_NUMBER;
+    error expError;
+    expError.type = MISSING_NUMBER;
 
     //---- Выполнение ----
-    errors actualErrorCode = errorCheck(verts);
+    error actualError;
+    errorCheck(verts, actualError);
 
     //---- Проверка ----
-    QCOMPARE(actualErrorCode, expErrorCode);
+    QCOMPARE(actualError.type, expError.type);
 
     //---- Очистка памяти ----
     int countVerts =10;
@@ -164,13 +172,15 @@ void Test_errorCheck::severalEqualNumbers()
     verts[1]->number = 3;
 
     //---- Подготовка ожидаемого результата ----
-    errors expErrorCode = SEVERAL_EQUAL_NUMBERS;
+    error expError;
+    expError.type = SEVERAL_EQUAL_NUMBERS;
 
     //---- Выполнение ----
-    errors actualErrorCode = errorCheck(verts);
+    error actualError;
+    errorCheck(verts, actualError);
 
     //---- Проверка ----
-    QCOMPARE(actualErrorCode, expErrorCode);
+    QCOMPARE(actualError.type, expError.type);
 
     //---- Очистка памяти ----
     int countVerts =10;
@@ -192,13 +202,17 @@ void Test_errorCheck::negativeNumber()
     verts[1]->number = -2;
 
     //---- Подготовка ожидаемого результата ----
-    errors expErrorCode = INCORRECT_NUMBER;
+    error expError;
+    expError.type = INCORRECT_NUMBER;
+    expError.incorrectAtr = "-2";
 
     //---- Выполнение ----
-    errors actualErrorCode = errorCheck(verts);
+    error actualError;
+    errorCheck(verts, actualError);
 
     //---- Проверка ----
-    QCOMPARE(actualErrorCode, expErrorCode);
+    QCOMPARE(actualError.type, expError.type);
+    QCOMPARE(actualError.incorrectAtr, expError.incorrectAtr);
 
     //---- Очистка памяти ----
     int countVerts =10;
@@ -219,13 +233,17 @@ void Test_errorCheck::missingSelectType()
     verts[9]->typeOfSelection = UNDERLYING;
 
     //---- Подготовка ожидаемого результата ----
-    errors expErrorCode = MISSING_SELECT_TYPE;
+    error expError;
+    expError.type = MISSING_SELECT_TYPE;
+    expError.number = 3;
 
     //---- Выполнение ----
-    errors actualErrorCode = errorCheck(verts);
+    error actualError;
+    errorCheck(verts, actualError);
 
     //---- Проверка ----
-    QCOMPARE(actualErrorCode, expErrorCode);
+    QCOMPARE(actualError.type, expError.type);
+    QCOMPARE(actualError.number, expError.number);
 
     //---- Очистка памяти ----
     int countVerts =10;

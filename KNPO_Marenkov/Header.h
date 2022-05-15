@@ -6,8 +6,8 @@
 #include <QFile>
 #include <QTextStream>
 
-//! Ошибки
-enum errors
+//! Тип ошибки
+enum errorType
 {
     NOT_ERRORS,
     INPUT_FILE_NOT_OPEN,
@@ -22,6 +22,19 @@ enum errors
     INCORRECT_NUMBER,
     MISSING_SELECT_TYPE,
     INCORRECT_SELECT_TYPE
+};
+
+//!Ошибка
+struct error
+{
+    //! Тип ошибки
+    errorType type;
+
+    //! Некорректный атрибут (при необходимости)
+    QString incorrectAtr;
+
+    //! Номер вершины (при необходимости, при его корректности)
+    int number;
 };
 
 //! Тип выбора вершины
@@ -127,15 +140,13 @@ bool writeTXT(const QString &filename, const QString & str);
 
 /*! \brief Проверяет переданные данные на наличие ошибок
  *  \param[in] verts - набор вершин
- *  \return - код ошибки
+ *  \param[out] err - ошибка
 */
-errors errorCheck(const QVector<vert*> &verts);
+void errorCheck(const QVector<vert*> &verts, error & err);
 
 /*! \brief Обрабатывает ошибки
- *  \param[in] errorCode - код ошибки
- *  \param[in] incorrectAtr - некорректный атрибут
- *  \param[in] number - номер вершины при необходимости
+ *  \param[in] err - ошибка
 */
-void errorHandler(errors errorCode, QString incorrectAtr = "", int number = -1);
+void errorHandler(const error &err);
 
 #endif // HEADER_H
