@@ -91,7 +91,18 @@ bool isGivenSetOfUnderlyingVertsSufficient(const QVector<vert*> & findingChildre
 
 void detectAllSelectedVerts(const QVector<vert*> &verts, QVector<vert*> &underlyingVerts, vert** overlyingVert)
 {
-
+    int countVerts = verts.size(); // количество вершин
+    for (int i=0; i<countVerts; i++)
+    {//Для каждой вершины
+        if (verts[i]->typeOfSelection == UNDERLYING)
+        {//тип выбора вершины нижележащая...
+            underlyingVerts.append(verts[i]); //...добавить текущую вершину в список вершин, считающихся нижележащими
+        }
+        else if (verts[i]->typeOfSelection == OVERLYING)
+        {// тип выбора вершины вышележащая...
+            *overlyingVert = verts[i]; //...считать, что текущая вершина - вышележащая
+        }
+    }
 }
 
 void deleteVertAndAllChildrenFromVector(QVector<vert*> &verts, int index)
