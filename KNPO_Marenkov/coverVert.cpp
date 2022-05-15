@@ -38,7 +38,18 @@ void deleteVertAndAllChildrenFromVector(QVector<vert*> &verts, int index)
 
 bool isVertContainsInVector(const vert* checkedVert, const QVector<vert*> & vertsVector)
 {
+    bool isContains = false; // cчитать, что вершина не содержится в векторе
+    int countVerts = vertsVector.size();
 
+    for (int i=0; i<countVerts && !isContains; i++)
+    {//Для всех элементов вектора и пока не обнаружено, что вершина содержится в векторе
+        if (checkedVert == vertsVector[i])
+        {// проверяемая вершина совпадает с текущей вершинной в векторе...
+            isContains = true; // ...считать, что вершина содержится в векторе
+        }
+    }
+
+    return isContains; //вернуть факт того, содержится ли в векторе заданная вершина
 }
 
 void choseTheLowestMissingVerts(const QVector<vert*> & allMissingVerts, QVector<int> &numbersVerts)
