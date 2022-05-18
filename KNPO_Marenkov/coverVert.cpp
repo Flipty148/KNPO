@@ -219,7 +219,22 @@ vert* createVert(const QDomNode & creationVert, vert*  parrentVert)
 
 bool writeTXT(const QString &filename, const QString & str)
 {
+    QFile file(filename); //объект файла
+    if (!file.open(QIODevice::WriteOnly))
+    {//Открыть файл только на запись
+        error err;
+        err.type = OUTPUT_FILE_NOT_OPEN;
+        throw err; //Вызвать исключение, связанное с открытием файла-назначения, если файл не удалось открыть
+    }
+    else
+    {
+        QTextStream textStream(&file); //Связать поток с файлом
 
+        textStream << str; //Записать строку в файл через поток
+
+        file.close(); //Закрыть файл
+    }
+  return true;
 }
 
 void errorCheck(const QVector<vert*> &verts, error & err)
