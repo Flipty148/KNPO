@@ -214,7 +214,80 @@ bool readXML(const QString &filename, vert** firstVert)
 
 vert* createVert(const QDomNode & creationVert, vert*  parrentVert)
 {
+    vert* currentVert = new vert; //Создать вершину
 
+    currentVert->parrent = parrentVert; //Установить указатель на родительскую вершину
+
+    bool isNumber;
+    int currentNumber = creationVert.toElement().attribute("number").toInt(&isNumber); //Получить номер вершины
+
+    if (isNumber)
+    {//номер вершины корректный...
+        currentVert->number = currentNumber; //...установить номер вершины
+    }
+    else
+    {
+        error err;
+        err.type = INCORRECT_NUMBER;
+        err.incorrectAtr = creationVert.toElement().attribute("number");
+        throw err; //Вызвать исключение, связанное с некорректным номером вершины
+    }
+
+    if ( creationVert.toElement().hasAttribute("select"))
+    {//у вершины есть атрибут "select"
+
+        QString typeSelectStr = creationVert.toElement().attribute("select");
+        //Преобразовать значение атрибута в тип выделения
+        if (typeSelectStr == "underlying")
+        {
+            currentVert->typeOfSelection = UNDERLYING;
+        }
+        else if (typeSelectStr == "overlying")
+        {
+            currentVert->typeOfSelection = OVERLYING;
+        }
+        else if (!typeSelectStr.isEmpty())
+        {
+            currentVert->typeOfSelection = INCORRECT;
+        }
+        else
+        {
+            currentVert->typeOfSelection = MISSING;
+        }
+
+        if (currentVert->typeOfSelection == INCORRECT)
+        {//тип выбора некорректный
+            error err;
+            err.type = INCORRECT_SELECT_TYPE;
+            err.number = currentVert->number;
+            err.incorrectAtr = typeSelectStr;
+            throw err;//Вызвать исключение, связанное некорректным типом выбора
+        }
+        else if (currentVert->typeOfSelection == MISSING)
+        {//отсутствует тип выбора
+            error err;
+            err.type = MISSING_SELECT_TYPE;
+            err.number = currentVert->number;
+            throw err; //Вызвать исключение, связанное с отсутствием типа выбора
+        }
+    }
+
+    if (creationVert.hasChildNodes())
+    {//у создаваемой вершины имеются дети
+        QDomNodeList children = creationVert.childNodes(); //список дочерних вершин
+        int countChildren = children.size(); //количество дочерних вершин
+
+        for (int i=0; i<countChildren; i++)
+        {//Для каждой дочерней вершины
+            QDomNode currentNode = children.item(i); //текущая дочерняя вершина
+
+            if (currentNode.nodeName() == "vert")
+            {//тег вершины "vert"...
+                currentVert->children.append(createVert(currentNode, currentVert)); //...создать вершину и добавить в качестве дочерней
+            }
+        }
+    }
+    return currentVert;//Вернуть текущую вершину
 }
 
 bool writeTXT(const QString &filename, const QString & str)
