@@ -209,7 +209,54 @@ QString formingAnswerString(bool resultSufficient, const QVector<int> & missingV
 
 bool readXML(const QString &filename, vert** firstVert)
 {
+    QDomDocument document("document");
+    QFile file(filename);
 
+    if(!file.open(QIODevice::ReadOnly))
+    {//Открыть файл с указанным именем только для чтения
+        error err;
+        err.type = INPUT_FILE_NOT_OPEN;
+        throw err; //Вызвать исключение, связанное с открытием файла-источника, если файл не удалось открыть
+    }
+
+    if (!document.setContent(&file))
+    {//Получить дерево из файла
+        error err;
+        err.type = TREE_MISSING;
+        throw err; //Вызвать исключение, связанное с отсутствием дерева
+    }
+    else
+    {
+        file.close(); //Закрыть файл
+
+        QDomNodeList list = document.elementsByTagName("verts"); //корневая вершина "verts"
+
+        if (list.size() != 1)
+        {//корневая вершина не единствена
+            error err;
+            err.type = TREE_MISSING;
+            throw err; //Вызвать исключение, связанное с отсутствием дерева
+        }
+
+        QDomNodeList child = list.item(0).childNodes(); //дочерняя вершина корневой
+
+        if(child.size() != 1)
+        {//верхняя вершина не единствена
+            error err;
+            err.type = TREE_MISSING;
+            throw err; //Вызвать исключение, связанное с отсутствием дерева
+        }
+        else if (child.item(0).toElement().tagName() != "vert")
+        {
+            error err;
+            err.type = TREE_MISSING;
+            throw err; //Вызвать исключение, связанное с отсутствием дерева
+        }
+
+        *firstVert = createVert(child.item(0), NULL); //Создать вершины
+    }
+
+    return true;
 }
 
 vert* createVert(const QDomNode & creationVert, vert*  parrentVert)

@@ -40,7 +40,7 @@ void Test_readXML::tree(QVector<vert*> & verts, int countVerts)
 void Test_readXML::fileWithTreeOpen()
 {
     //---- Подготовка входных данных ----
-    QString file = "./xml/fileWithTreeOpen.xml";
+    QString file = "../../KNPO/Test_readXML/xml/fileWithTreeOpen.xml";
 
     //---- Подготовка ожидаемых результатов ----
     QVector<vert*> expVerts;
@@ -82,7 +82,7 @@ void Test_readXML::fileWithTreeOpen()
 
         int countChildren = expVerts[index]->children.length();
         QVector<int> expVertChildren(countChildren);
-        for (int j=0; j<countVerts; j++)
+        for (int j=0; j<countChildren; j++)
         {
             expVertChildren[j] = expVerts[index]->children[j]->number;
         }
@@ -104,7 +104,7 @@ void Test_readXML::fileWithTreeOpen()
 void Test_readXML::fileNotOpen()
 {
     //---- Подготовка входных данных ----
-    QString file = "./xml/fileNotOpen.xml";
+    QString file = "../../KNPO/Test_readXML/xml/fileNotOpen.xml";
 
     //---- Подготовка ожидаемого результата ----
     error expError;
@@ -115,18 +115,18 @@ void Test_readXML::fileNotOpen()
     {
         vert* firstVert;
         readXML(file, &firstVert);
+        QVERIFY(false);
     }
     catch (error err)
     {
         QCOMPARE(err.type, expError.type);
     }
-    QVERIFY(false);
 }
 
 void Test_readXML::fileWithoutTree()
 {
     //---- Подготовка входных данных ----
-    QString file = "./xml/fileWithoutTree.xml";
+    QString file = "../../KNPO/Test_readXML/xml/fileWithoutTree.xml";
 
     //---- Подготовка ожидаемого результата ----
     error expError;
@@ -137,18 +137,18 @@ void Test_readXML::fileWithoutTree()
     {
         vert* firstVert;
         readXML(file, &firstVert);
+        QVERIFY(false);
     }
     catch (error err)
     {
         QCOMPARE(err.type, expError.type);
     }
-    QVERIFY(false);
 }
 
 void Test_readXML::oneVertInTree()
 {
     //---- Подготовка входных данных ----
-    QString file = "./xml/oneVertInTree.xml";
+    QString file = "../../KNPO/Test_readXML/xml/oneVertInTree.xml";
 
     //---- Подготовка ожидаемых результатов ----
     vert* expVert = new vert;
@@ -178,7 +178,7 @@ void Test_readXML::oneVertInTree()
 void Test_readXML::twoLevelsInTree()
 {
     //---- Подготовка входных данных ----
-    QString file = "./xml/twoLevelsInTree.xml";
+    QString file = "../../KNPO/Test_readXML/xml/twoLevelsInTree.xml";
 
     //---- Подготовка ожидаемых результатов ----
     QVector<vert*> expVerts;
@@ -218,7 +218,7 @@ void Test_readXML::twoLevelsInTree()
 
         int countChildren = expVerts[index]->children.length();
         QVector<int> expVertChildren(countChildren);
-        for (int j=0; j<countVerts; j++)
+        for (int j=0; j<countChildren; j++)
         {
             expVertChildren[j] = expVerts[index]->children[j]->number;
         }
@@ -240,7 +240,7 @@ void Test_readXML::twoLevelsInTree()
 void Test_readXML::incorrectVertNumber()
 {
     //---- Подготовка входных данных ----
-    QString file = "./xml/incorrectVertNumber.xml";
+    QString file = "../../KNPO/Test_readXML/xml/incorrectVertNumber.xml";
 
     //---- Подготовка ожидаемого результата ----
     error expError;
@@ -252,19 +252,19 @@ void Test_readXML::incorrectVertNumber()
     {
         vert* firstVert;
         readXML(file, &firstVert);
+        QVERIFY(false);
     }
     catch (error err)
     {
         QCOMPARE(err.type, expError.type);
         QCOMPARE(err.incorrectAtr, expError.incorrectAtr);
     }
-    QVERIFY(false);
 }
 
 void Test_readXML::incorrectSelectType()
 {
     //---- Подготовка входных данных ----
-    QString file = "./xml/incorrectSelectType.xml";
+    QString file = "../../KNPO/Test_readXML/xml/incorrectSelectType.xml";
 
     //---- Подготовка ожидаемого результата ----
     error expError;
@@ -276,7 +276,8 @@ void Test_readXML::incorrectSelectType()
     try
     {
         vert* firstVert;
-        readXML(file, &firstVert);
+        readXML(file, &firstVert);            
+        QVERIFY(false);
     }
     catch (error err)
     {
@@ -284,7 +285,6 @@ void Test_readXML::incorrectSelectType()
         QCOMPARE(err.incorrectAtr, expError.incorrectAtr);
         QCOMPARE(err.number, expError.number);
     }
-    QVERIFY(false);
 }
 
 QTEST_APPLESS_MAIN(Test_readXML);
