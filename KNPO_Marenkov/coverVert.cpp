@@ -182,7 +182,29 @@ void choseTheLowestMissingVerts(const QVector<vert*> & allMissingVerts, QVector<
 
 QString formingAnswerString(bool resultSufficient, const QVector<int> & missingVerts)
 {
-    return "0";
+    QString answer;
+
+    if (resultSufficient == true)
+    {//заданный набор является достаточным...
+        answer = "Заданный набор узлов покрывает вышележащий узел"; //...в строку ответа записать сообщение об этом
+    }
+    else
+    {
+        //Сформировать строку, содержащую номера недостающих вершин, разделённых пробелами
+        int countMissingVerts = missingVerts.size();
+        for (int i=0; i<countMissingVerts; i++)
+        {
+            QString numberInStr;
+            numberInStr.setNum(missingVerts[i]);
+            answer += numberInStr;
+            if (i != countMissingVerts  -1)
+            {
+                answer += ' ';
+            }
+        }
+    }
+
+    return answer;//Вернуть строку, содержащую ответ
 }
 
 bool readXML(const QString &filename, vert** firstVert)
