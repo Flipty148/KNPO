@@ -57,7 +57,7 @@ struct vert
     vertSelectionType typeOfSelection = NOT_SELECTED;
 
     //! Указатель на родительскую вершину
-    vert * parrent;
+    vert * parrent = NULL;
 
     //! Вектор указателей на дочерние вершины
     QVector<vert*> children;

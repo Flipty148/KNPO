@@ -365,7 +365,90 @@ bool writeTXT(const QString &filename, const QString & str)
 
 void errorCheck(const QVector<vert*> &verts, error & err)
 {
+    int countVerts = verts.size(); //количество вершин
+    int countWithoutParrent = 0; //количество вершин без родительских вершин
+    int countOverlyingVert = 0; //количество вершин, считающихся вышележащими
 
+    for (int i =0; i<countVerts; i++)
+    {//Для каждой вершины
+        if (verts[i]->parrent == NULL)
+            countWithoutParrent ++; //увеличить количество вершин без родительских вершин, если у текущей вершины отсутствует родительская вершина
+        if (verts[i]->typeOfSelection == OVERLYING)
+            countOverlyingVert ++; //увеличить количество вершин, считающихся вышележащими, если у текущей вершины тип выбора вышележащая
+    }
+
+    if (countWithoutParrent != 1)
+    {
+        err.type = TREE_MISSING; //Проверить, присутствует ли дерево
+        return;
+    }
+
+    if (countOverlyingVert == 0)
+    {
+        err.type = MISSING_OVERLYING_VERT; //Проверить, присутствует ли вершина считающаяся вышележащей
+        return;
+    }
+
+    if (countOverlyingVert > 1)
+    {
+        err.type = SEVERAL_OVERLYING_VERTS; //Проверить единственность вышележащей вершины
+        return;
+    }
+
+    //Проверить единственность каждого номера
+    QVector<int> numberVerts;
+    for (int i=0; i<countVerts; i++)
+    {//Для каждой вершины
+        numberVerts.append(verts[i]->number); //добавить номер в список номеров вершин
+    }
+
+    bool isUniqueNumber = true; //флаг, показывающий уникальность номера
+    for (int i=0; i<countVerts && isUniqueNumber; i++)
+    {
+        if (numberVerts.count(numberVerts[i]) != 1)
+            isUniqueNumber = false;
+    }
+    if (!isUniqueNumber)
+    {
+        err.type = SEVERAL_EQUAL_NUMBERS;
+        return;
+    }
+
+    //Проверить корректность номеров
+    int i=0;
+    bool isCorrectNumber = true; //флаг, показывающий корректность номера
+    while (i<countVerts && isCorrectNumber)
+    {
+        if (numberVerts[i] <= 0)
+            isCorrectNumber = false;
+        else
+            i++;
+    }
+    if (!isCorrectNumber)
+    {
+        err.type = INCORRECT_NUMBER;
+        err.incorrectAtr = err.incorrectAtr.setNum(numberVerts[i]);
+        return;
+    }
+
+    //Проверить наличие у всех выбранных вершин атрибута "type"
+    bool isHaveType = true; //флаг, показывающий наличие типа выбора у вершины
+    i=0;
+    while (i<countVerts && isHaveType)
+    {
+        if (verts[i]->typeOfSelection == MISSING)
+            isHaveType = false;
+        else
+            i++;
+    }
+    if (!isHaveType)
+    {
+        err.type = MISSING_SELECT_TYPE;
+        err.number = verts[i]->number;
+        return;
+    }
+
+    err.type = NOT_ERRORS;
 }
 
 void errorHandler(const error &err)

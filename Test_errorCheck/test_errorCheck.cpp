@@ -130,36 +130,6 @@ void Test_errorCheck::severalOverlyingVert()
     }
 }
 
-void Test_errorCheck::missingNumber()
-{
-    //---- Подготовка входных данных ----
-    QVector<vert*> verts;
-    tree(verts);
-    verts[2]->typeOfSelection = OVERLYING;
-    verts[7]->typeOfSelection = UNDERLYING;
-    verts[8]->typeOfSelection = UNDERLYING;
-    verts[9]->typeOfSelection = UNDERLYING;
-    verts[1]->number = NULL;
-
-    //---- Подготовка ожидаемого результата ----
-    error expError;
-    expError.type = MISSING_NUMBER;
-
-    //---- Выполнение ----
-    error actualError;
-    errorCheck(verts, actualError);
-
-    //---- Проверка ----
-    QCOMPARE(actualError.type, expError.type);
-
-    //---- Очистка памяти ----
-    int countVerts =10;
-    for (int i=0; i<countVerts; i++)
-    {
-        delete verts[i];
-    }
-}
-
 void Test_errorCheck::severalEqualNumbers()
 {
     //---- Подготовка входных данных ----
@@ -227,6 +197,7 @@ void Test_errorCheck::missingSelectType()
     //---- Подготовка входных данных ----
     QVector<vert*> verts;
     tree(verts);
+    verts[0]->typeOfSelection = OVERLYING;
     verts[2]->typeOfSelection = MISSING;
     verts[7]->typeOfSelection = UNDERLYING;
     verts[8]->typeOfSelection = UNDERLYING;
