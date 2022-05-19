@@ -272,12 +272,18 @@ vert* createVert(const QDomNode & creationVert, vert*  parrentVert)
     {//номер вершины корректный...
         currentVert->number = currentNumber; //...установить номер вершины
     }
-    else
+    else if (!creationVert.toElement().attribute("number").isEmpty())
     {
         error err;
         err.type = INCORRECT_NUMBER;
         err.incorrectAtr = creationVert.toElement().attribute("number");
         throw err; //Вызвать исключение, связанное с некорректным номером вершины
+    }
+    else
+    {
+        error err;
+        err.type = MISSING_NUMBER;
+        throw err; //Вызвать исключение, связанное с отсутствием номера у вершины
     }
 
     if ( creationVert.toElement().hasAttribute("select"))

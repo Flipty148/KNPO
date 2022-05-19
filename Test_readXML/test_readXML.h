@@ -24,6 +24,7 @@ private slots:
     void twoLevelsInTree();
     void incorrectVertNumber();
     void incorrectSelectType();
+    void missingNumber();
 };
 
 #endif // TEST_READXML_H

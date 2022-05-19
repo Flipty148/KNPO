@@ -287,4 +287,26 @@ void Test_readXML::incorrectSelectType()
     }
 }
 
+void Test_readXML::missingNumber()
+{
+    //---- Подготовка входных данных ----
+    QString file = "../../KNPO/Test_readXML/xml/missingNumber.xml";
+
+    //---- Подготовка ожидаемого результата ----
+    error expError;
+    expError.type = MISSING_NUMBER;
+
+    //---- Выполнение ----
+    try
+    {
+        vert* firstVert;
+        readXML(file, &firstVert);
+        QVERIFY(false);
+    }
+    catch (error err)
+    {
+        QCOMPARE(err.type, expError.type);
+    }
+}
+
 QTEST_APPLESS_MAIN(Test_readXML);

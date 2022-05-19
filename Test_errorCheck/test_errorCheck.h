@@ -20,7 +20,6 @@ private slots:
     void missingTree();
     void missingOverlyingVert();
     void severalOverlyingVert();
-    void missingNumber();
     void severalEqualNumbers();
     void negativeNumber();
     void missingSelectType();
