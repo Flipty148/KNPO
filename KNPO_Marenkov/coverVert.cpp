@@ -451,7 +451,73 @@ void errorCheck(const QVector<vert*> &verts, error & err)
     err.type = NOT_ERRORS;
 }
 
-void errorHandler(const error &err)
+void errorHandler(const error &err, const QString &filename)
 {
+    QString errorMessage; //сообщение ошибки
 
+    bool isWriteToFile = true; //возможна ли запись в выходной файл
+    QString num; //Номер вершины, при необходимости
+    num.setNum(err.number);
+    switch (err.type)
+    {
+        case WRONG_NUMBER_ARGUMENTS:
+            errorMessage = "Неверное количество аргументов командной строки.";
+            isWriteToFile = false;
+            break;
+        case OUTPUT_FILE_NOT_OPEN :
+            errorMessage = "Неверно указан файл для выходных данных. Возможно, указанного расположения не существует или нет прав на запись файла.";
+            isWriteToFile = false;
+            break;
+        case OUTPUT_FILE_INCORRECT_TYPE:
+            errorMessage = "Неверно указан файл для выходных данных. Неподдерживаемый тип файла. Файл должен быть расширения .txt.";
+            isWriteToFile = false;
+            break;
+        case INPUT_FILE_NOT_OPEN :
+            errorMessage = "Неверно указан файл с входными данными. Возможно, файл не существует или нет прав на чтение файла.";
+            break;
+        case INPUT_FILE_INCORRECT_TYPE :
+            errorMessage = "Неверно указан файл с входными данными. Неподдерживаемый тип файла. Файл должен быть расширения .xml.";
+            break;
+        case TREE_MISSING:
+            errorMessage = "Файл не содержит дерева.";
+            break;
+        case MISSING_OVERLYING_VERT:
+            errorMessage = "Не выбран вышележащий узел. Укажите узел и набор покрывающих его узлов.";
+            break;
+        case SEVERAL_OVERLYING_VERTS:
+            errorMessage = "Выбрано несколько вышележащих узлов. Укажите только один вышележащий узел.";
+            break;
+        case MISSING_NUMBER:
+            errorMessage = "Тег вершины не имеет атрибута \"number\". Укажите для каждой вершины атрибут \"number\" в формате натурального числа.";
+            break;
+        case SEVERAL_EQUAL_NUMBERS:
+            errorMessage = "Некоторые вершины имеют одинаковые номера. Укажите для всех вершин различные номера.";
+            break;
+        case INCORRECT_NUMBER:
+            errorMessage = "Вершина имеет некорректное значение \"" + err.incorrectAtr + "\" атрибута \"number\". Атрибут \"number\" должен быть натуральным числом.";
+            break;
+        case MISSING_SELECT_TYPE:
+            errorMessage = "У вершины с номером \"" + num + "\" у атрибута \"select\" отсутствует значение.";
+            break;
+        case INCORRECT_SELECT_TYPE:
+            errorMessage = "У вершины с номером \"" + num +
+                    "\" атрибут \"select\" имеет некорректное значение \"" +
+                    err.incorrectAtr + "\". Данный атрибут может принимать одно из следующих значений:\n" +
+                    "-\"overlying\";\n-\"underlying\".";
+            break;
+        case NOT_ERRORS:
+            break;
+
+    }
+        try
+        {
+            if (isWriteToFile)
+                writeTXT(filename,errorMessage);
+            setlocale(LC_ALL, "rus");
+            std::cout << QString(errorMessage).toLocal8Bit().data() <<std::endl;
+        }
+        catch (error er)
+        {
+            errorHandler(er);
+        }
 }

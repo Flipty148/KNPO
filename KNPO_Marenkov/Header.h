@@ -5,11 +5,13 @@
 #include <QVector>
 #include <QFile>
 #include <QTextStream>
+#include <iostream>
 
 //! Тип ошибки
 enum errorType
 {
     NOT_ERRORS,
+    WRONG_NUMBER_ARGUMENTS,
     INPUT_FILE_NOT_OPEN,
     INPUT_FILE_INCORRECT_TYPE,
     OUTPUT_FILE_NOT_OPEN,
@@ -146,7 +148,8 @@ void errorCheck(const QVector<vert*> &verts, error & err);
 
 /*! \brief Обрабатывает ошибки
  *  \param[in] err - ошибка
+ *  \param[in] filename - имя выходного файла
 */
-void errorHandler(const error &err);
+void errorHandler(const error &err, const QString &filename = "");
 
 #endif // HEADER_H
