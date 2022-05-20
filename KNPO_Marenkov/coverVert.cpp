@@ -219,10 +219,14 @@ bool readXML(const QString &filename, vert** firstVert)
         throw err; //Вызвать исключение, связанное с открытием файла-источника, если файл не удалось открыть
     }
 
-    if (!document.setContent(&file))
+    QString errorXmlSyntax;
+    int errorXmlLine;
+    if (!document.setContent(&file, &errorXmlSyntax, &errorXmlLine))
     {//Получить дерево из файла
         error err;
-        err.type = TREE_MISSING;
+        err.type = WRONG_XML_SYNTAX;
+        err.incorrectAtr = errorXmlSyntax;
+        err.number = errorXmlLine;
         throw err; //Вызвать исключение, связанное с отсутствием дерева
     }
     else
@@ -474,6 +478,9 @@ void errorHandler(const error &err, const QString &filename)
             break;
         case INPUT_FILE_NOT_OPEN :
             errorMessage = "Неверно указан файл с входными данными. Возможно, файл не существует или нет прав на чтение файла.";
+            break;
+        case WRONG_XML_SYNTAX:
+            errorMessage = err.incorrectAtr + " in line: " + num;
             break;
         case INPUT_FILE_INCORRECT_TYPE :
             errorMessage = "Неверно указан файл с входными данными. Неподдерживаемый тип файла. Файл должен быть расширения .xml.";
