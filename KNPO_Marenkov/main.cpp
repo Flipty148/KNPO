@@ -1,3 +1,8 @@
+/*!
+ * \file
+ * \brief Файл, содержащий реализацию main
+*/
+
 #include "Header.h"
 int main(int argc, char *argv[])
 {

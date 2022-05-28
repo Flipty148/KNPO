@@ -1,3 +1,11 @@
+
+/*!
+ * \file
+ * \brief Файл, содержащий реализацию основных функций
+ *
+ * Данный файл содержит реализацию функций, необходимых для данной программы
+*/
+
 #include <QCoreApplication>
 #include "Header.h"
 
@@ -227,7 +235,7 @@ bool readXML(const QString &filename, vert** firstVert)
         err.type = WRONG_XML_SYNTAX;
         err.incorrectAtr = errorXmlSyntax;
         err.number = errorXmlLine;
-        throw err; //Вызвать исключение, связанное с отсутствием дерева
+        throw err; //Вызвать исключение, связанное с синтаксической ошибкой
     }
     else
     {

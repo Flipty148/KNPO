@@ -1,3 +1,11 @@
+/*!
+ * \file
+ * \brief Заголовочный файл с описанием структур и прототипов функций
+ *
+ * Данный файл содержит в себе описание всех структур,
+ * перечислений и функций, используемых в программе.
+*/
+
 #ifndef HEADER_H
 #define HEADER_H
 
@@ -10,21 +18,21 @@
 //! Тип ошибки
 enum errorType
 {
-    NOT_ERRORS,
-    WRONG_NUMBER_ARGUMENTS,
-    WRONG_XML_SYNTAX,
-    INPUT_FILE_NOT_OPEN,
-    INPUT_FILE_INCORRECT_TYPE,
-    OUTPUT_FILE_NOT_OPEN,
-    OUTPUT_FILE_INCORRECT_TYPE,
-    TREE_MISSING,
-    MISSING_OVERLYING_VERT,
-    SEVERAL_OVERLYING_VERTS,
-    MISSING_NUMBER,
-    SEVERAL_EQUAL_NUMBERS,
-    INCORRECT_NUMBER,
-    MISSING_SELECT_TYPE,
-    INCORRECT_SELECT_TYPE
+    NOT_ERRORS, ///< Ошибки отсутствуют
+    WRONG_NUMBER_ARGUMENTS, ///< Неверное количество аргументов коммандной строки
+    WRONG_XML_SYNTAX, ///< Некорректный синтаксис во входном xml файле
+    INPUT_FILE_NOT_OPEN, ///< Файл со входными данными не открывается
+    INPUT_FILE_INCORRECT_TYPE, ///< Неподдерживаемое расширение файла со входными данными
+    OUTPUT_FILE_NOT_OPEN, ///< Файл для выходный данных не открывается
+    OUTPUT_FILE_INCORRECT_TYPE, ///< Неподдерживаемое расширение файла для выходных данных
+    TREE_MISSING, ///< Во входном файле отсутствует дерево
+    MISSING_OVERLYING_VERT, ///< Отсутствует вершина, считающаяся вышележащей
+    SEVERAL_OVERLYING_VERTS, ///< Несколько вершин, считающихся вышележащими
+    MISSING_NUMBER, ///< Отсутствие номера у вершины
+    SEVERAL_EQUAL_NUMBERS, ///< Несколько вершин с одинаковыми номерами
+    INCORRECT_NUMBER, ///< Некорректный номер вершины
+    MISSING_SELECT_TYPE, ///< У выбранной вершины отсутствует тип выбора
+    INCORRECT_SELECT_TYPE ///< Некорректный тип выбора у выбранной вершины
 };
 
 //!Ошибка
@@ -43,11 +51,11 @@ struct error
 //! Тип выбора вершины
 enum vertSelectionType
 {
-    NOT_SELECTED,
-    UNDERLYING,
-    OVERLYING,
-    INCORRECT,
-    MISSING
+    NOT_SELECTED, ///< Вершина не выбрана
+    UNDERLYING, ///< Вершина выбрана как нижележащая
+    OVERLYING, ///< Вершина выбрана как вышележащая (проверяемая)
+    INCORRECT, ///< Вершина имеет некорректный тип ывбора
+    MISSING ///< Вершина выбрана без типа выбора
 };
 
 //! Вершина
@@ -95,12 +103,12 @@ bool isGivenSetOfUnderlyingVertsSufficient(const QVector<vert*> & findingChildre
 void detectAllSelectedVerts(const QVector<vert*> &verts, QVector<vert*> &underlyingVerts, vert** overlyingVert);
 
 /*! \brief Удаляет из вектора вершину с указанным индексом и все связанные с ней дочерние вершины
- *  \param[in\out] verts - вектор вершин
+ *  \param[in,out] verts - вектор вершин
  *  \param[in] index - индекс вершины удаления
 */
 void deleteVertAndAllChildrenFromVector(QVector<vert*> &verts, int index);
 
-/*! Прверяет, содержиться ли вершина в указанном векторе
+/*! \brief Прверяет, содержиться ли вершина в указанном векторе
  *  \param[in] checkedVert - проверяемая вершина
  *  \param[in] vertsVector - вектор, в котором производиться проверка
  *  \return - факт того, содержится ли вершина в векторе
@@ -121,9 +129,12 @@ void choseTheLowestMissingVerts(const QVector<vert*> & allMissingVerts, QVector<
 QString formingAnswerString(bool resultSufficient, const QVector<int> & missingVerts);
 
 /*! \brief Считывает данные с указанного xml-файла
- *  \param[im] filename - имя файла источника
+ *  \param[in] filename - имя файла источника
  *  \param[out] firstVert - указатель на корневую вершину
  *  \return - успешность считывания с файла
+ *  \throw INPUT_FILE_NOT_OPEN - Если файл со входными данными не открывается
+ *  \throw WRONG_XML_SYNTAX - Если файл со входными данными содержит синтаксические Xml ошибки
+ *  \throw TREE_MISSING - Если файл со входными данными не содержит дерева
 */
 bool readXML(const QString &filename, vert** firstVert);
 
@@ -131,6 +142,10 @@ bool readXML(const QString &filename, vert** firstVert);
  *  \param[in] creationVert - создаваемая вершина
  *  \param[in] parrentVert - родительская вершина
  *  \return - дочерняя вершина
+ *  \throw INCORRECT_NUMBER - Если вершина во входном файле содержит некорректный номер
+ *  \throw MISSING_NUMBER - Если у вершины во входном файле отсутствует номер
+ *  \throw INCORRECT_SELECT_TYPE - Если вершина во входном файле имеет некорректный тип выбора
+ *  \throw MISSING_SELECT_TYPE - Если у выбранной вершины отсутствует тип выбора
 */
 vert* createVert(const QDomNode & creationVert, vert*  parrentVert);
 
@@ -138,6 +153,7 @@ vert* createVert(const QDomNode & creationVert, vert*  parrentVert);
  *  \param[in] filename - имя файла назначения
  *  \param[in] str - строка, которая будет записана в файл
  *  \return - успешность записи в файл
+ *  \throw OUTPUT_FILE_NOT_OPEN - Если файл для записи не открывается
 */
 bool writeTXT(const QString &filename, const QString & str);
 
