@@ -162,18 +162,7 @@ void deleteVertAndAllChildrenFromVector(QVector<vert*> &verts, int index)
 
 bool isVertContainsInVector(const vert* checkedVert, const QVector<vert*> & vertsVector)
 {
-    bool isContains = false; // cчитать, что вершина не содержится в векторе
-    int countVerts = vertsVector.size();
-
-    for (int i=0; i<countVerts && !isContains; i++)
-    {//Для всех элементов вектора и пока не обнаружено, что вершина содержится в векторе
-        if (checkedVert == vertsVector[i])
-        {// проверяемая вершина совпадает с текущей вершинной в векторе...
-            isContains = true; // ...считать, что вершина содержится в векторе
-        }
-    }
-
-    return isContains; //вернуть факт того, содержится ли в векторе заданная вершина
+    return vertsVector.contains(checkedVert); //вернуть факт того, содержится ли в векторе заданная вершина
 }
 
 void choseTheLowestMissingVerts(const QVector<vert*> & allMissingVerts, QVector<int> &numbersVerts)
@@ -408,16 +397,16 @@ void errorCheck(const QVector<vert*> &verts, error & err)
     }
 
     //Проверить единственность каждого номера
-    QVector<int> numberVerts;
+    QVector<int> numberVerts(verts.length());
     for (int i=0; i<countVerts; i++)
     {//Для каждой вершины
-        numberVerts.append(verts[i]->number); //добавить номер в список номеров вершин
+        numberVerts[i] = verts[i]->number; //добавить номер в список номеров вершин
     }
 
     bool isUniqueNumber = true; //флаг, показывающий уникальность номера
     for (int i=0; i<countVerts && isUniqueNumber; i++)
     {
-        if (numberVerts.count(numberVerts[i]) != 1)
+        if (numberVerts.indexOf((numberVerts[i])) != numberVerts.lastIndexOf(numberVerts[i]))
             isUniqueNumber = false;
     }
     if (!isUniqueNumber)
